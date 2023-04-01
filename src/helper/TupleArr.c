@@ -4,41 +4,57 @@
 #include <string.h>
 #include <time.h>
 
-TupleArr *genRandomTupleArr(int size, int max) {
-  srand(time(NULL));
-  TupleArr *tuple_arr = malloc(sizeof(*tuple_arr));
-  tuple_arr->arr = malloc(size * sizeof(tuple_arr->arr));
-  int *count = calloc(max + 1, sizeof(*count));
+TupleArr *initTupleArr(int size) {
+  TupleArr *tupleArr = malloc(sizeof(*tupleArr));
+  tupleArr->size = size;
+  tupleArr->arr = malloc(size * sizeof(*(tupleArr->arr)));
+
+  return tupleArr;
+}
+
+TupleArr *genRandomTupleArr(int size, int max, int seed) {
+  TupleArr *tupleArr = initTupleArr(size);
+
+  randomiseTuples(tupleArr, size, max, seed);
+  return tupleArr;
+}
+
+void randomiseTuples(TupleArr *tupleArr, int size, int max, int seed) {
+  if (seed == -1) {
+    srand(time(NULL));
+  } else {
+    srand(seed);
+  }
+
+  int count[max + 1];
+  memset(count, 0, sizeof(count));
   for (int i = 0; i < size; i++) {
     int num = rand() % (max + 1);
-    tuple_arr->arr[i].n = num;
-    tuple_arr->arr[i].c = count[num] + 97;
+    tupleArr->arr[i].n = num;
+    tupleArr->arr[i].c = count[num] + 97;
     count[num]++;
   }
-  tuple_arr->size = size;
-  free(count);
-  return tuple_arr;
 }
 
 TupleArr *manualTupleArr(void) {
   int n[] = {10, 10, 4, 3, 2};
   char c[] = {'a', 'b', 'a', 'a', 'a'};
 
-  TupleArr *tuple_arr = malloc(sizeof(*tuple_arr));
-  tuple_arr->arr = malloc(strlen(c) * sizeof(*tuple_arr->arr));
-  tuple_arr->size = strlen(c);
+  TupleArr *tupleArr = malloc(sizeof(*tupleArr));
+  tupleArr->arr = malloc(strlen(c) * sizeof(*(tupleArr->arr)));
+  tupleArr->size = strlen(c);
 
   for (int i = 0; i < strlen(c); i++) {
-    tuple_arr->arr[i].n = n[i];
-    tuple_arr->arr[i].c = c[i];
+    tupleArr->arr[i].n = n[i];
+    tupleArr->arr[i].c = c[i];
   }
-  return tuple_arr;
+  return tupleArr;
 }
 
 int findMinIndex(Tuple *tuple_arr, int start, int end) {
   int min = tuple_arr[start].n;
   int index = start;
-  for (int i = start; i <= end; i++) {
+  for (int i = start; i < end; i++) {
     if (tuple_arr[i].n < min) {
       min = tuple_arr[i].n;
       index = i;
@@ -52,7 +68,7 @@ void findMinMaxIndex(Tuple *tuple_arr, int start, int end, int *minIndex, int *m
   int max = tuple_arr[start].n;
   *minIndex = start;
   *maxIndex = start;
-  for (int i = start; i <= end; i++) {
+  for (int i = start; i < end + 1; i++) {
     if (tuple_arr[i].n < min) {
       min = tuple_arr[i].n;
       *minIndex = i;
@@ -86,4 +102,9 @@ void printTupleArr(Tuple *arr, int size) {
     }
   }
   printf("\n");
+}
+
+void freeTupleArr(TupleArr* tupleArr) {
+  free(tupleArr->arr);
+  free(tupleArr);
 }

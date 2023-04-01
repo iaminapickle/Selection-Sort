@@ -1,13 +1,13 @@
 CC = gcc
 CFLAGS = -c -Wall
-VPATH = ../../../Helper
+VPATH = ../helper
 
 all: unstable_bidirectional_selection_sort.o stable_bidirectional_selection_sort.o
 
-unstable_bidirectional_selection_sort.o: unstable_bidirectional_selection_sort.c Tuple.h TupleArr.h
+unstable_bidirectional_selection_sort.o: unstable_bidirectional_selection_sort.c
 	$(CC) $(CFLAGS) $^
 
-stable_bidirectional_selection_sort.o: stable_bidirectional_selection_sort.c Tuple.h TupleArr.h
+stable_bidirectional_selection_sort.o: stable_bidirectional_selection_sort.c
 	$(CC) $(CFLAGS) $^
 
 clean:

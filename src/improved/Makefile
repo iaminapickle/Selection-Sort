@@ -4,10 +4,10 @@ VPATH = ../../../Helper
 
 all: unstable_improved_selection_sort.o stable_improved_selection_sort.o
 
-unstable_improved_selection_sort.o: unstable_improved_selection_sort.c Tuple.h TupleArr.h
+unstable_improved_selection_sort.o: unstable_improved_selection_sort.c
 	$(CC) $(CFLAGS) $^
 
-stable_improved_selection_sort.o: stable_improved_selection_sort.c Tuple.h TupleArr.h
+stable_improved_selection_sort.o: stable_improved_selection_sort.c 
 	$(CC) $(CFLAGS) $^
 
 clean:

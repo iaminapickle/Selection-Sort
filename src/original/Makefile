@@ -1,13 +1,13 @@
 CC = gcc
 CFLAGS = -c -Wall
-VPATH = ../../../Helper
+VPATH = ../helper
 
 all: unstable_selection_sort.o stable_selection_sort.o
 
-unstable_selection_sort.o: unstable_selection_sort.c Tuple.h TupleArr.h
+unstable_selection_sort.o: unstable_selection_sort.c
 	$(CC) $(CFLAGS) $^
 
-stable_selection_sort.o: stable_selection_sort.c Tuple.h TupleArr.h
+stable_selection_sort.o: stable_selection_sort.c
 	$(CC) $(CFLAGS) $^
 
 clean:

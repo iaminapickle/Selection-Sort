@@ -1,5 +1,5 @@
-#include "../../../Helper/TupleArr.h"
-#include "../../../Helper/Tuple.h"
+#include "../helper/TupleArr.h"
+#include "../helper/Tuple.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -9,6 +9,7 @@ void stableBidirectionalSelectionSort(TupleArr *tupleArr) {
 
   int minIndex, maxIndex, left, right;
   Tuple tempMin, tempMax;
+  
   for (int i = 0; i < size / 2; i++) {
     findMinMaxIndex(arr, i, size - i - 1, &minIndex, &maxIndex);
     tempMin = arr[minIndex];
