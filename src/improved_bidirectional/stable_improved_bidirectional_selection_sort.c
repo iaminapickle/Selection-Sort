@@ -96,9 +96,8 @@ void stableImprovedBidirectionalSelectionSort(TupleArr *tupleArr) {
     }
 
 
-    for (int k = max_size - 1; k >= 0; k--) {
+    for (int k = max_size - 1; k >= 0; k--, j--) {
       arr[j] = max_tuples[k];
-      j--;
     }
   }
 

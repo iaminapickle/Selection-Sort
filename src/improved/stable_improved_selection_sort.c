@@ -37,7 +37,7 @@ void stableImprovedSelectionSort(TupleArr *tupleArr) {
     if (min_size == size - i) {
       break;
     }
-    
+
     int offset = 0;
     int m = min_size - 1;
     for (int k = min_q[m]; k > i + min_size - 1; k--) {

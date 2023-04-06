@@ -20,12 +20,8 @@ TupleArr *genRandomTupleArr(int size, int max, int seed) {
 }
 
 void randomiseTuples(TupleArr *tupleArr, int size, int max, int seed) {
-  if (seed == -1) {
-    srand(time(NULL));
-  } else {
-    srand(seed);
-  }
-
+  srand(seed);
+  
   int count[max + 1];
   memset(count, 0, sizeof(count));
   for (int i = 0; i < size; i++) {
