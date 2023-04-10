@@ -11,7 +11,7 @@ void stableBidirectionalSelectionSort(TupleArr *tupleArr) {
   Tuple tempMin, tempMax;
 
   for (int i = 0; i < size / 2; i++) {
-    findMinMaxIndex(arr, i, size - i - 1, &minIndex, &maxIndex);
+    findMinMaxIndex_FirstMinLastMax(arr, i, size - i - 1, &minIndex, &maxIndex);
     tempMin = arr[minIndex];
     tempMax = arr[maxIndex];
 

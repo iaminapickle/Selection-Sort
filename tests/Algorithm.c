@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 #include <stdlib.h>
 #include <sys/time.h>
 #include <time.h>
@@ -22,6 +23,7 @@ bool testAlgorithmCorrectness(Algorithm algorithm, unsigned int* seeds) {
   bool flag = true;
 
   for (int i = 0; i < DEFAULT_N_TESTS; i++) {
+
 
     if (i < DEFAULT_N_TESTS) {
       randomiseTuples_Unique(tupleArr, DEFAULT_MAX_VAL, DEFAULT_MAX_VAL, seeds[i]);
@@ -64,6 +66,7 @@ double testAlgorithmTime(Algorithm algorithm, unsigned int* seeds, int testSize,
 
   for (int i = 0; i < DEFAULT_N_TESTS; i++) {
     randomiseTuples_Unique(tupleArr, maxVal, maxVal, seeds[i]);
+
     long long start = timeInMilliseconds();
     (*algorithm.sort)(tupleArr);
     long long end = timeInMilliseconds();
@@ -76,9 +79,10 @@ double testAlgorithmTime(Algorithm algorithm, unsigned int* seeds, int testSize,
 
 bool checkArrStable(TupleArr* tupleArr) {
   Tuple *arr = tupleArr->arr;
+  int max = findMaxValue(tupleArr->arr, 0, tupleArr->size);
 
-  int count[DEFAULT_MAX_VAL + 1] = {0};
-  for (int i = 0; i < DEFAULT_TEST_SIZE - 1; i++) {
+  int *count = calloc(max + 1, sizeof(*count));
+  for (int i = 0; i < tupleArr->size - 1; i++) {
     if (arr[i].n > arr[i + 1].n) {
       return false;
     }
@@ -88,6 +92,7 @@ bool checkArrStable(TupleArr* tupleArr) {
     }
     count[arr[i].n] += 1;
   }
+  free(count);
   return true;
 }
 

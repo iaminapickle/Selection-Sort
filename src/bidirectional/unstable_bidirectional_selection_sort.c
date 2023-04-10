@@ -9,7 +9,7 @@ void unstableBidirectionalSelectionSort(TupleArr *tupleArr) {
 
   int minIndex, maxIndex;
   for (int i = 0; i < size / 2; i++) {
-    findMinMaxIndex(arr, i, size - i - 1, &minIndex, &maxIndex);
+    findMinMaxIndex_FirstMinFirstMax(arr, i, size - i - 1, &minIndex, &maxIndex);
 
     // In case i is the index of the maximum, swap max and min index
     if (i == maxIndex) {

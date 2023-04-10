@@ -45,6 +45,27 @@ void randomiseTuples_Cons(TupleArr *tupleArr, int seed) {
   shuffleTupleArr(tupleArr);
 }
 
+void randomiseTuples_Max(TupleArr *tupleArr, int max, int seed) {
+  srand(seed);
+
+  tupleArr->arr[0].n = 0;
+  tupleArr->arr[1].n = max;
+  for (int i = 2; i < tupleArr->size; i++) {
+    int num = rand() % (max + 1);
+    tupleArr->arr[i].n = num;
+  }
+
+  shuffleTupleArr(tupleArr);
+
+  int count[max + 1];
+  memset(count, 0, sizeof(count));
+  for (int i = 0; i < tupleArr->size; i++) {
+    int num = tupleArr->arr[i].n;
+    tupleArr->arr[i].c = count[num] + 97;
+    count[num]++;
+  }
+}
+
 // n_unique <= size
 void randomiseTuples_Unique(TupleArr *tupleArr, int max, int n_unique, int seed) {
   srand(seed);
@@ -150,7 +171,8 @@ int findMinValue(Tuple *tuple_arr, int start, int end) {
   return tuple_arr[findMinIndex(tuple_arr, start, end)].n;
 }
 
-void findMinMaxIndex(Tuple *tuple_arr, int start, int end, int *minIndex, int *maxIndex) {
+// Returns the first minimum value and the last maximum value
+void findMinMaxIndex_FirstMinLastMax(Tuple *tuple_arr, int start, int end, int *minIndex, int *maxIndex) {
   int min = tuple_arr[start].n;
   int max = tuple_arr[start].n;
   *minIndex = start;
@@ -162,6 +184,26 @@ void findMinMaxIndex(Tuple *tuple_arr, int start, int end, int *minIndex, int *m
     }
 
     if (tuple_arr[i].n >= max) {
+      max = tuple_arr[i].n;
+      *maxIndex = i;
+    }
+  }
+  return;
+}
+
+// Returns the first min and max value
+void findMinMaxIndex_FirstMinFirstMax(Tuple *tuple_arr, int start, int end, int *minIndex, int *maxIndex) {
+  int min = tuple_arr[start].n;
+  int max = tuple_arr[start].n;
+  *minIndex = start;
+  *maxIndex = start;
+  for (int i = start; i < end + 1; i++) {
+    if (tuple_arr[i].n < min) {
+      min = tuple_arr[i].n;
+      *minIndex = i;
+    }
+
+    if (tuple_arr[i].n > max) {
       max = tuple_arr[i].n;
       *maxIndex = i;
     }
