@@ -12,6 +12,7 @@
 #define RESET "\033[0m"
 
 #define SIMPLE_TESTS false
+#define NO_ALGORITHMS 6
 
 unsigned int* generateSeeds(void);
 void printBuffer(int nameLength, int longestNameLength);
@@ -47,22 +48,24 @@ void testAllAlgorithmCorrectness(AlgorithmArr *algos) {
 void testAllAlgorithmTime(AlgorithmArr *algos) {
   unsigned int *seeds = generateSeeds();
   int noResults = 0;
-  Results **results = malloc(6 * sizeof(*results));
 
   if (SIMPLE_TESTS) {
+    Results **results = malloc(NO_ALGORITHMS * sizeof(*results));
     runTimeTests(algos, results, &noResults, seeds, DEFAULT_TEST_SIZE, DEFAULT_MAX_VAL);
     printTimeResults(algos, results, noResults);
+    freeResults(results, noResults);
   } else {
-    for (int testSize = 10; testSize < 100000; testSize *= 10) {
-      for (int maxVal = 10; maxVal < 10000000; maxVal *= 10) {
+    for (int testSize = 10; testSize < 1000000; testSize *= 10) {
+      Results **results = malloc(NO_ALGORITHMS * sizeof(*results));
+      for (int maxVal = 10; maxVal <= testSize; maxVal *= 10) {
         runTimeTests(algos, results, &noResults, seeds, testSize, maxVal);
       }
       printTimeResults(algos, results, noResults);
+      freeResults(results, noResults);
       noResults = 0;
     }
   }
   free(seeds);
-  freeResults(results, noResults);
 }
 
 unsigned int* generateSeeds(void) {
@@ -141,7 +144,6 @@ void addAlgorithm(AlgorithmArr *algos, void (*sort)(TupleArr*), bool isStable, c
 }
 
 void printTimeResults(AlgorithmArr *algos, Results **results, int noResults) {
-  printf("Testing for time taken:\n");
   for (int i = 0; i < algos->noAlgos; i++) {
     Algorithm cur = algos->arr[i];
     printf("%s:", cur.name);
@@ -168,6 +170,7 @@ void printTimeResults(AlgorithmArr *algos, Results **results, int noResults) {
 void runTimeTests(AlgorithmArr *algos, Results **results, int *noResults, unsigned int *seeds, int testSize, int maxVal) {
   double res[algos->noAlgos];
   for (int i = 0; i < algos->noAlgos; i++) {
+    printf("Testing %s...\n", algos->arr[i].name);
     res[i] = testAlgorithmTime(algos->arr[i], seeds, testSize, maxVal);
   }
 

@@ -24,9 +24,9 @@ bool testAlgorithmCorrectness(Algorithm algorithm, unsigned int* seeds) {
   for (int i = 0; i < DEFAULT_N_TESTS; i++) {
 
     if (i < DEFAULT_N_TESTS) {
-      randomiseTuples(tupleArr, DEFAULT_TEST_SIZE, DEFAULT_MAX_VAL, seeds[i]);
+      randomiseTuples_Unique(tupleArr, DEFAULT_MAX_VAL, DEFAULT_MAX_VAL, seeds[i]);
     } else {
-      randomiseTuples(tupleArr, DEFAULT_TEST_SIZE, 2, seeds[i]);
+      randomiseTuples_Unique(tupleArr, 2, 2, seeds[i]);
     }
 
     for (int j = 0; j < DEFAULT_TEST_SIZE; j++) {
@@ -63,8 +63,7 @@ double testAlgorithmTime(Algorithm algorithm, unsigned int* seeds, int testSize,
   long long time_ms = 0;
 
   for (int i = 0; i < DEFAULT_N_TESTS; i++) {
-    randomiseTuples(tupleArr, testSize, maxVal, seeds[i]);
-
+    randomiseTuples_Unique(tupleArr, maxVal, maxVal, seeds[i]);
     long long start = timeInMilliseconds();
     (*algorithm.sort)(tupleArr);
     long long end = timeInMilliseconds();

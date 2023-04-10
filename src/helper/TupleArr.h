@@ -10,10 +10,16 @@ typedef struct tuple_arr_struct {
 
 TupleArr *initTupleArr(int size);
 TupleArr *genRandomTupleArr(int size, int max, int seed);
-void randomiseTuples(TupleArr *tupleArr, int size, int max, int seed);
+void randomiseTuples(TupleArr *tupleArr, int max, int seed);
+void randomiseTuples_Cons(TupleArr *tupleArr, int seed);
+void randomiseTuples_Unique(TupleArr *tupleArr, int max, int n_unique, int seed);
+void shuffleTupleArr(TupleArr *tupleArr);
 TupleArr *manualTupleArr(void);
 
 int findMinIndex(Tuple *tuple_arr, int start, int end);
+int findMinValue(Tuple *tuple_arr, int start, int end);
+int findMaxIndex(Tuple *tuple_arr, int start, int end);
+int findMaxValue(Tuple *tuple_arr, int start, int end);
 void findMinMaxIndex(Tuple *arr, int start, int end, int *minIndex, int *maxIndex);
 
 void moveAcrossRight(Tuple *tuple_arr, int start, int end);
